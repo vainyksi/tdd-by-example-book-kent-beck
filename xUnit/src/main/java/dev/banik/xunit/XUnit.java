@@ -8,10 +8,24 @@ public class XUnit {
 //        TestCase("testMethod").run();
 
         WasRun test = new WasRun("testMethod");
-        assert !test.wasRun;
+        assertExpression(!test.wasRun);
         test.run();
-        assert test.wasRun;
+        assertExpression(test.wasRun, "The test case should run, but flag was '%s'", String.valueOf(test.wasRun));
 
+    }
+
+    private static void assertExpression(boolean expression, String... messages) {
+        if (!expression) {
+            String exceptionMessage;
+            if (messages.length > 0) {
+                String[] params = new String[messages.length - 1];
+                System.arraycopy(messages, 1, params, 0, messages.length - 1);
+                exceptionMessage = String.format(messages[0], params);
+            } else {
+                exceptionMessage = "expected true, but received false";
+            }
+            throw new RuntimeException("Assertion error: " + exceptionMessage);
+        }
     }
 
     static class TestCase implements Runnable {
