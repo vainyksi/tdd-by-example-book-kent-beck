@@ -6,12 +6,12 @@ public class TestCase {
 
         WasRun test = new WasRun("testMethod");
         assert !test.wasRun;
-        test.testMethod();
+        test.run();
         assert test.wasRun;
 
     }
 
-    static class WasRun {
+    static class WasRun implements Runnable{
 
         public boolean wasRun = false;
 
@@ -20,6 +20,11 @@ public class TestCase {
 
         public void testMethod() {
             wasRun = true;
+        }
+
+        @Override
+        public void run() {
+            testMethod();
         }
     }
 }
