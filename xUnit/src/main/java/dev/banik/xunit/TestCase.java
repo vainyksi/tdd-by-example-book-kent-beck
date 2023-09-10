@@ -19,6 +19,7 @@ public class TestCase {
         }
 
         public void testMethod() {
+            wasRun = true;
         }
     }
 }
