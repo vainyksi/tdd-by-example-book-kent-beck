@@ -16,19 +16,23 @@ public class XUnit {
 
     static class TestCase {
 
-    }
+        protected final Method method;
 
-    static class WasRun extends TestCase implements Runnable {
-
-        private final Method method;
-        public boolean wasRun = false;
-
-        public WasRun(String methodName) {
+        TestCase(String methodName) {
             try {
                 this.method = this.getClass().getMethod(methodName);
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    static class WasRun extends TestCase implements Runnable {
+
+        public boolean wasRun = false;
+
+        public WasRun(String methodName) {
+            super(methodName);
         }
 
         public void testMethod() {
