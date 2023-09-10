@@ -25,6 +25,14 @@ public class XUnit {
                 throw new RuntimeException(e);
             }
         }
+
+        public void run() {
+            try {
+                method.invoke(this);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     static class WasRun extends TestCase implements Runnable {
@@ -39,13 +47,5 @@ public class XUnit {
             wasRun = true;
         }
 
-        @Override
-        public void run() {
-            try {
-                method.invoke(this);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }
