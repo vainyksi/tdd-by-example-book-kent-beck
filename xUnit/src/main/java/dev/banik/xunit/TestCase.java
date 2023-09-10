@@ -5,9 +5,9 @@ public class TestCase {
 //        TestCase("testMethod").run();
 
         WasRun test = new WasRun("testMethod");
-        assert test.wasRun == false;
+        assert !test.wasRun;
         test.testMethod();
-        assert test.wasRun == true;
+        assert test.wasRun;
 
     }
 
