@@ -3,7 +3,7 @@ package dev.banik.xunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class TestCase {
+public class XUnit {
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
@@ -14,7 +14,7 @@ public class TestCase {
 
     }
 
-    static class WasRun implements Runnable{
+    static class WasRun implements Runnable {
 
         private final Method method;
         public boolean wasRun = false;
