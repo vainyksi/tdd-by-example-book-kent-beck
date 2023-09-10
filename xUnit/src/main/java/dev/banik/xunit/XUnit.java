@@ -14,7 +14,7 @@ public class XUnit {
 
     }
 
-    static class TestCase {
+    static class TestCase implements Runnable {
 
         protected final Method method;
 
@@ -35,7 +35,7 @@ public class XUnit {
         }
     }
 
-    static class WasRun extends TestCase implements Runnable {
+    static class WasRun extends TestCase {
 
         public boolean wasRun = false;
 
