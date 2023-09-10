@@ -14,7 +14,11 @@ public class XUnit {
 
     }
 
-    static class WasRun implements Runnable {
+    static class TestCase {
+
+    }
+
+    static class WasRun extends TestCase implements Runnable {
 
         private final Method method;
         public boolean wasRun = false;
