@@ -17,6 +17,7 @@ class WasRun extends TestCase {
 
     public void testMethod() {
         wasRun = true;
+        this.log = this.log + "testMethod ";
     }
 
 }
