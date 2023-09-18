@@ -15,7 +15,8 @@ public class XUnit {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
-        test.run();
+        TestResult result = test.run();
+        Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
 
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
 

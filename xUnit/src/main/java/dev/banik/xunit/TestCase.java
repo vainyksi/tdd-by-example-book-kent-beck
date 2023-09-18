@@ -3,7 +3,7 @@ package dev.banik.xunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-class TestCase implements Runnable {
+class TestCase {
 
     protected final Method method;
 
@@ -15,7 +15,7 @@ class TestCase implements Runnable {
         }
     }
 
-    public void run() {
+    public TestResult run() {
         try {
             this.setUp();
             method.invoke(this);
@@ -23,6 +23,8 @@ class TestCase implements Runnable {
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+
+        return new TestResult() ;
     }
 
     protected void tearDown() {
