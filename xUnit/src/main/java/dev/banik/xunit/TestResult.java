@@ -1,7 +1,9 @@
 package dev.banik.xunit;
 
 public class TestResult {
+    private int runCount = 1;
+
     public String summary() {
-        return "1 run, 0 failed";
+        return "%d run, 0 failed".formatted(runCount);
     }
 }
