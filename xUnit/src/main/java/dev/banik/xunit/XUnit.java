@@ -16,7 +16,7 @@ public class XUnit {
         Assertions.assertExpression(!test.wasRun);
         test.run();
         Assertions.assertExpression(test.wasRun, "The test case should run, but flag `wasRun` is '%s'".formatted(test.wasRun));
-        Assertions.assertExpression(test.wasSetUp);
+        Assertions.assertExpression("setUp ".equals(test.log));
 
     }
 
