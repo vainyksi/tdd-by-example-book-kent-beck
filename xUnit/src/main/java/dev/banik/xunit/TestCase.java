@@ -16,6 +16,8 @@ class TestCase {
     }
 
     public TestResult run() {
+        TestResult testResult = new TestResult();
+        testResult.testStarted();
         try {
             this.setUp();
             method.invoke(this);
@@ -24,7 +26,7 @@ class TestCase {
             throw new RuntimeException(e);
         }
 
-        return new TestResult() ;
+        return testResult;
     }
 
     protected void tearDown() {
