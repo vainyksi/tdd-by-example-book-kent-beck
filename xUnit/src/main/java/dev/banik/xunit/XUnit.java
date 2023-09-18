@@ -1,8 +1,5 @@
 package dev.banik.xunit;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class XUnit {
     // ~~Invoke test method~~
     // ~~Invoke setUp first~~
@@ -36,31 +33,6 @@ public class XUnit {
                 exceptionMessage = "expected true for assertion expression, but received false";
             }
             throw new RuntimeException("Assertion error: " + exceptionMessage);
-        }
-    }
-
-    static class TestCase implements Runnable {
-
-        protected final Method method;
-
-        TestCase(String methodName) {
-            try {
-                this.method = this.getClass().getMethod(methodName);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public void run() {
-            try {
-                this.setUp();
-                method.invoke(this);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        protected void setUp() {
         }
     }
 
