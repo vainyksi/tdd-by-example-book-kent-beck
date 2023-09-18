@@ -17,7 +17,7 @@ public class XUnit {
         Assertions.assertExpression(!test.wasRun);
         test.run();
 
-        Assertions.assertExpression("setUp testMethod ".equals(test.log));
+        Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
 
     }
 

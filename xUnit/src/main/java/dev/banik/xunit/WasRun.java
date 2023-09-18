@@ -15,6 +15,11 @@ class WasRun extends TestCase {
         this.log = "setUp ";
     }
 
+    @Override
+    protected void tearDown() {
+        this.log = this.log + "tearDown ";
+    }
+
     public void testMethod() {
         wasRun = true;
         this.log = this.log + "testMethod ";

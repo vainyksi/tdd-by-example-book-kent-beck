@@ -19,9 +19,14 @@ class TestCase implements Runnable {
         try {
             this.setUp();
             method.invoke(this);
+            this.tearDown();
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void tearDown() {
+
     }
 
     protected void setUp() {
