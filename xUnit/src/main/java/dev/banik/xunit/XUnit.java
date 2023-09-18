@@ -13,27 +13,11 @@ public class XUnit {
 //        TestCase("testMethod").run();
 
         WasRun test = new WasRun("testMethod");
-        assertExpression(!test.wasRun);
+        Assertions.assertExpression(!test.wasRun);
         test.run();
-        assertExpression(test.wasRun, "The test case should run, but flag `wasRun` is '%s'".formatted(test.wasRun));
-        assertExpression(test.wasSetUp);
+        Assertions.assertExpression(test.wasRun, "The test case should run, but flag `wasRun` is '%s'".formatted(test.wasRun));
+        Assertions.assertExpression(test.wasSetUp);
 
-    }
-
-    private static void assertExpression(boolean expression) {
-        assertExpression(expression, null);
-    }
-
-    private static void assertExpression(boolean expression, String message) {
-        if (!expression) {
-            final String exceptionMessage;
-            if (message != null && !message.isEmpty()) {
-                exceptionMessage = message;
-            } else {
-                exceptionMessage = "expected true for assertion expression, but received false";
-            }
-            throw new RuntimeException("Assertion error: " + exceptionMessage);
-        }
     }
 
 }
