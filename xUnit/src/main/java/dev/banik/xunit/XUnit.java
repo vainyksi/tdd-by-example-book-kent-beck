@@ -17,19 +17,21 @@ public class XUnit {
         WasRun test = new WasRun("testMethod");
         assertExpression(!test.wasRun);
         test.run();
-        assertExpression(test.wasRun, "The test case should run, but flag was '%s'", String.valueOf(test.wasRun));
+        assertExpression(test.wasRun, "The test case should run, but flag `wasRun` is '%s'".formatted(test.wasRun));
 
     }
 
-    private static void assertExpression(boolean expression, String... messages) {
+    private static void assertExpression(boolean expression) {
+        assertExpression(expression, null);
+    }
+
+    private static void assertExpression(boolean expression, String message) {
         if (!expression) {
-            String exceptionMessage;
-            if (messages.length > 0) {
-                String[] params = new String[messages.length - 1];
-                System.arraycopy(messages, 1, params, 0, messages.length - 1);
-                exceptionMessage = String.format(messages[0], params);
+            final String exceptionMessage;
+            if (message != null && !message.isEmpty()) {
+                exceptionMessage = message;
             } else {
-                exceptionMessage = "expected true, but received false";
+                exceptionMessage = "expected true for assertion expression, but received false";
             }
             throw new RuntimeException("Assertion error: " + exceptionMessage);
         }
