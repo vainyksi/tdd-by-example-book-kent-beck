@@ -4,6 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class XUnit {
+    // ~~Invoke test method~~
+    // Invoke setUp first
+    // Invoke tearDown afterward
+    // Invoke tearDown even if the test method fails
+    // Run multiple tests
+    // Report collected results
+
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
