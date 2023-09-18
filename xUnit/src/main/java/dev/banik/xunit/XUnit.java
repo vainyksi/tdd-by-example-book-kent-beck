@@ -12,14 +12,23 @@ public class XUnit {
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
+        testTemplateMethod();
+        testResult();
+
+    }
+
+    private static void testResult() {
+        WasRun test = new WasRun("testMethod");
+        TestResult result = test.run();
+        Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
+    }
+
+    private static void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
-        TestResult result = test.run();
-        Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
-
+        test.run();
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
-
     }
 
 }
