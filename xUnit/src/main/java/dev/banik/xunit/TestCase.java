@@ -24,10 +24,10 @@ public class TestCase {
         try {
             this.setUp();
             method.invoke(this);
-            this.tearDown();
         } catch (IllegalAccessException | InvocationTargetException e) {
             testResult.testFailed();
         }
+        this.tearDown();
 
         return testResult;
     }

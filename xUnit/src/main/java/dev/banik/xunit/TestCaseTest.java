@@ -9,7 +9,7 @@ public class TestCaseTest extends TestCase {
     // ~~Invoke test method~~
     // ~~Invoke setUp first~~
     // ~~Invoke tearDown afterward~~
-    // Invoke tearDown even if the test method fails
+    // ~~Invoke tearDown even if the test method fails~~
     // ~~Run multiple tests~~
     // ~~Report collected results~~
     // ~~Log string in WasRun~~
@@ -36,6 +36,8 @@ public class TestCaseTest extends TestCase {
         System.out.println(new TestCaseTest("testFailedResultFormatting").run(new TestResult()).summary());
         System.out.println(new TestCaseTest("testFailedResult").run(new TestResult()).summary());
         System.out.println(new TestCaseTest("testSuite").run(new TestResult()).summary());
+
+        System.out.println(new TestCaseTest("testTearDownAfterFailing").run(new TestResult()).summary());
     }
 
     @Override
@@ -71,6 +73,14 @@ public class TestCaseTest extends TestCase {
 
     void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
+
+        Assertions.assertExpression(!test.wasRun);
+        result = test.run(result);
+        Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
+    }
+
+    void testTearDownAfterFailing() {
+        WasRun test = new FailingTestCase("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
         result = test.run(result);
