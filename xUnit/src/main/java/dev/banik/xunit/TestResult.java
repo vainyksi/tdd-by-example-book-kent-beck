@@ -2,12 +2,17 @@ package dev.banik.xunit;
 
 public class TestResult {
     private int runCount = 0;
+    private int errorCount = 0;
 
     public String summary() {
-        return "%d run, 0 failed".formatted(runCount);
+        return "%d run, %d failed".formatted(runCount, errorCount);
     }
 
     public void testStarted() {
         this.runCount++;
+    }
+
+    public void testFailed() {
+        this.errorCount++;
     }
 }
