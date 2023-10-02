@@ -15,11 +15,11 @@ public class TestCaseTest {
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
-        System.out.println(testTemplateMethod().summary());
-        System.out.println(testResult().summary());
-        System.out.println(testFailedResultFormatting().summary()); // chapter 22
-        System.out.println(testFailedResult().summary()); // chapter 22
-        System.out.println(testSuite().summary()); // chapter 23
+        System.out.println(new TestCaseTest().testTemplateMethod().summary());
+        System.out.println(new TestCaseTest().testResult().summary());
+        System.out.println(new TestCaseTest().testFailedResultFormatting().summary()); // chapter 22
+        System.out.println(new TestCaseTest().testFailedResult().summary()); // chapter 22
+        System.out.println(new TestCaseTest().testSuite().summary()); // chapter 23
 
     }
 
