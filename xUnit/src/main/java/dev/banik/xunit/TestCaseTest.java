@@ -5,7 +5,7 @@ public class TestCaseTest {
     // ~~Invoke setUp first~~
     // ~~Invoke tearDown afterward~~
     // Invoke tearDown even if the test method fails
-    // Run multiple tests
+    // *Run multiple tests
     // ~~Report collected results~~
     // ~~Log string in WasRun~~
     // ~~Report failed tests~~
@@ -15,38 +15,41 @@ public class TestCaseTest {
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
-        testTemplateMethod();
-        testResult();
-        testFailedResultFormatting(); // chapter 22
-        testFailedResult(); // chapter 22
-
+        System.out.println(testTemplateMethod().summary());
+        System.out.println(testResult().summary());
+        System.out.println(testFailedResultFormatting().summary()); // chapter 22
+        System.out.println(testFailedResult().summary()); // chapter 22
     }
 
-    private static void testFailedResult() {
+    private static TestResult testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
         TestResult result = test.run();
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
+        return result;
     }
 
-    private static void testFailedResultFormatting() {
+    private static TestResult testFailedResultFormatting() {
         TestResult result = new TestResult();
         result.testStarted();
         result.testFailed();
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
+        return result;
     }
 
-    private static void testResult() {
+    private static TestResult testResult() {
         WasRun test = new WasRun("testMethod");
         TestResult result = test.run();
         Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
+        return result;
     }
 
-    private static void testTemplateMethod() {
+    private static TestResult testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
-        test.run();
+        TestResult result = test.run();
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
+        return result;
     }
 
 }
