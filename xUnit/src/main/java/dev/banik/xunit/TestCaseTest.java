@@ -74,7 +74,7 @@ public class TestCaseTest extends TestCase {
     void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
-        Assertions.assertExpression(!test.wasRun);
+        Assertions.assertExpression(test.log.isEmpty());
         result = test.run(result);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
@@ -82,7 +82,7 @@ public class TestCaseTest extends TestCase {
     void testTearDownAfterFailing() {
         WasRun test = new FailingTestCase("testMethod");
 
-        Assertions.assertExpression(!test.wasRun);
+        Assertions.assertExpression(test.log.isEmpty());
         result = test.run(result);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
