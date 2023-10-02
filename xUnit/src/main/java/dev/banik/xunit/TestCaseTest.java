@@ -23,7 +23,7 @@ public class TestCaseTest {
 
     }
 
-    private static TestResult testSuite() {
+    private TestResult testSuite() {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
@@ -32,7 +32,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private static TestResult testFailedResult() {
+    private TestResult testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
         TestResult result = new TestResult();
         result = test.run(result);
@@ -40,7 +40,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private static TestResult testFailedResultFormatting() {
+    private TestResult testFailedResultFormatting() {
         TestResult result = new TestResult();
         result.testStarted();
         result.testFailed();
@@ -48,7 +48,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private static TestResult testResult() {
+    private TestResult testResult() {
         WasRun test = new WasRun("testMethod");
         TestResult result = new TestResult();
         result = test.run(result);
@@ -56,7 +56,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private static TestResult testTemplateMethod() {
+    private TestResult testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
