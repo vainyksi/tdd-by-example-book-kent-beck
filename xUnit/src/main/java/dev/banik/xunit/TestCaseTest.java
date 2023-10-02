@@ -19,11 +19,23 @@ public class TestCaseTest {
         System.out.println(testResult().summary());
         System.out.println(testFailedResultFormatting().summary()); // chapter 22
         System.out.println(testFailedResult().summary()); // chapter 22
+        System.out.println(testSuite().summary()); // chapter 23
+
+    }
+
+    private static TestResult testSuite() {
+        TestSuite suite = new TestSuite();
+        suite.add(new WasRun("testMethod"));
+        suite.add(new WasRun("testBrokenMethod"));
+        TestResult result = suite.run();
+        Assertions.assertExpression("2 run, 1 failed".equals(result.summary()), result.summary());
+        return result;
     }
 
     private static TestResult testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        TestResult result = test.run();
+        TestResult result = new TestResult();
+        result = test.run(result);
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
         return result;
     }
@@ -38,7 +50,8 @@ public class TestCaseTest {
 
     private static TestResult testResult() {
         WasRun test = new WasRun("testMethod");
-        TestResult result = test.run();
+        TestResult result = new TestResult();
+        result = test.run(result);
         Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
         return result;
     }
@@ -47,7 +60,8 @@ public class TestCaseTest {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
-        TestResult result = test.run();
+        TestResult result = new TestResult();
+        result = test.run(result);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
         return result;
     }

@@ -3,7 +3,7 @@ package dev.banik.xunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-class TestCase {
+public class TestCase {
 
     protected final Method method;
 
@@ -15,8 +15,7 @@ class TestCase {
         }
     }
 
-    public TestResult run() {
-        TestResult testResult = new TestResult();
+    public TestResult run(TestResult testResult) {
         testResult.testStarted();
         try {
             this.setUp();
