@@ -9,17 +9,24 @@ public class TestCase {
 
     TestCase(String methodName) {
         try {
-            this.method = this.getClass().getMethod(methodName);
+            this.method = this.getClass().getDeclaredMethod(methodName);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public TestCase() {
+        method = null;
     }
 
     public TestResult run(TestResult testResult) {
         testResult.testStarted();
         try {
             this.setUp();
-            method.invoke(this);
+            TestResult result = (TestResult) method.invoke(this);
+            if (result != null) {
+                testResult = result;
+            }
             this.tearDown();
         } catch (IllegalAccessException | InvocationTargetException e) {
             testResult.testFailed();

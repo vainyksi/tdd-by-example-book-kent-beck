@@ -1,6 +1,9 @@
 package dev.banik.xunit;
 
-public class TestCaseTest {
+public class TestCaseTest extends TestCase {
+    TestCaseTest(String methodName) {
+        super(methodName);
+    }
     // ~~Invoke test method~~
     // ~~Invoke setUp first~~
     // ~~Invoke tearDown afterward~~
@@ -15,24 +18,29 @@ public class TestCaseTest {
     public static void main(String[] args) {
 //        TestCase("testMethod").run();
 
-        System.out.println(new TestCaseTest().testTemplateMethod().summary());
-        System.out.println(new TestCaseTest().testResult().summary());
-        System.out.println(new TestCaseTest().testFailedResultFormatting().summary()); // chapter 22
-        System.out.println(new TestCaseTest().testFailedResult().summary()); // chapter 22
-        System.out.println(new TestCaseTest().testSuite().summary()); // chapter 23
+        TestSuite suite = new TestSuite();
 
+        TestResult result = new TestResult();
+        suite.add(new TestCaseTest("testTemplateMethod"));
+        suite.add(new TestCaseTest("testResult"));
+        suite.add(new TestCaseTest("testFailedResultFormatting")); // chapter 22
+        suite.add(new TestCaseTest("testFailedResult")); // chapter 22
+        suite.add(new TestCaseTest("testSuite")); // chapter 23
+        result = suite.run(result);
+
+        System.out.println(result.summary());
     }
 
-    private TestResult testSuite() {
+    TestResult testSuite() {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        TestResult result = suite.run();
+        TestResult result = suite.run(new TestResult());
         Assertions.assertExpression("2 run, 1 failed".equals(result.summary()), result.summary());
         return result;
     }
 
-    private TestResult testFailedResult() {
+    TestResult testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
         TestResult result = new TestResult();
         result = test.run(result);
@@ -40,7 +48,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private TestResult testFailedResultFormatting() {
+    TestResult testFailedResultFormatting() {
         TestResult result = new TestResult();
         result.testStarted();
         result.testFailed();
@@ -48,7 +56,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private TestResult testResult() {
+    TestResult testResult() {
         WasRun test = new WasRun("testMethod");
         TestResult result = new TestResult();
         result = test.run(result);
@@ -56,7 +64,7 @@ public class TestCaseTest {
         return result;
     }
 
-    private TestResult testTemplateMethod() {
+    TestResult testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
