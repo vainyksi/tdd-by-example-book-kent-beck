@@ -1,6 +1,6 @@
 package dev.banik.xunit;
 
-public class XUnit {
+public class TestCaseTest {
     // ~~Invoke test method~~
     // ~~Invoke setUp first~~
     // ~~Invoke tearDown afterward~~
