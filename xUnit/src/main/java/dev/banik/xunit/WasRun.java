@@ -2,7 +2,6 @@ package dev.banik.xunit;
 
 class WasRun extends TestCase {
 
-    public boolean wasRun = false;
     public String log = "";
 
     public WasRun(String methodName) {
@@ -11,7 +10,6 @@ class WasRun extends TestCase {
 
     @Override
     protected void setUp() {
-        this.wasRun = false;
         this.log = "setUp ";
     }
 
@@ -21,7 +19,6 @@ class WasRun extends TestCase {
     }
 
     public void testMethod() {
-        wasRun = true;
         this.log = this.log + "testMethod ";
     }
 
