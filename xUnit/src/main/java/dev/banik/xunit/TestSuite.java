@@ -15,10 +15,9 @@ public class TestSuite extends TestCase{
 
     @Override
     public TestResult run(TestResult testResult) {
-        TestResult result = new TestResult();
         for (TestCase test : tests) {
-            test.run(result);
+            test.run(testResult);
         }
-        return result;
+        return testResult;
     }
 }

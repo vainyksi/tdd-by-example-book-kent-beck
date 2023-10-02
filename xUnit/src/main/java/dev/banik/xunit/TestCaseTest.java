@@ -1,6 +1,8 @@
 package dev.banik.xunit;
 
 public class TestCaseTest extends TestCase {
+    private TestResult result;
+
     TestCaseTest(String methodName) {
         super(methodName);
     }
@@ -31,25 +33,28 @@ public class TestCaseTest extends TestCase {
         System.out.println(result.summary());
     }
 
+    @Override
+    protected void setUp() {
+        result = new TestResult();
+    }
+
     TestResult testSuite() {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        TestResult result = suite.run(new TestResult());
+        result = suite.run(this.result);
         Assertions.assertExpression("2 run, 1 failed".equals(result.summary()), result.summary());
         return result;
     }
 
     TestResult testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        TestResult result = new TestResult();
-        result = test.run(result);
+        result = test.run(this.result);
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
         return result;
     }
 
     TestResult testFailedResultFormatting() {
-        TestResult result = new TestResult();
         result.testStarted();
         result.testFailed();
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
@@ -58,7 +63,6 @@ public class TestCaseTest extends TestCase {
 
     TestResult testResult() {
         WasRun test = new WasRun("testMethod");
-        TestResult result = new TestResult();
         result = test.run(result);
         Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
         return result;
@@ -68,7 +72,6 @@ public class TestCaseTest extends TestCase {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
-        TestResult result = new TestResult();
         result = test.run(result);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
         return result;
