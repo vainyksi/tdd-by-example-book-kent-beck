@@ -23,10 +23,7 @@ public class TestCase {
         testResult.testStarted();
         try {
             this.setUp();
-            TestResult result = (TestResult) method.invoke(this);
-            if (result != null) {
-                testResult = result;
-            }
+            method.invoke(this);
             this.tearDown();
         } catch (IllegalAccessException | InvocationTargetException e) {
             testResult.testFailed();
@@ -36,7 +33,6 @@ public class TestCase {
     }
 
     protected void tearDown() {
-
     }
 
     protected void setUp() {

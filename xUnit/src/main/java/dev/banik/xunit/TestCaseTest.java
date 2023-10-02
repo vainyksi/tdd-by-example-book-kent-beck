@@ -29,8 +29,13 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("testFailedResult")); // chapter 22
         suite.add(new TestCaseTest("testSuite")); // chapter 23
         result = suite.run(result);
-
         System.out.println(result.summary());
+
+        System.out.println(new TestCaseTest("testTemplateMethod").run(new TestResult()).summary());
+        System.out.println(new TestCaseTest("testResult").run(new TestResult()).summary());
+        System.out.println(new TestCaseTest("testFailedResultFormatting").run(new TestResult()).summary());
+        System.out.println(new TestCaseTest("testFailedResult").run(new TestResult()).summary());
+        System.out.println(new TestCaseTest("testSuite").run(new TestResult()).summary());
     }
 
     @Override
