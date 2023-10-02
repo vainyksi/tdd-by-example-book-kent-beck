@@ -38,43 +38,38 @@ public class TestCaseTest extends TestCase {
         result = new TestResult();
     }
 
-    TestResult testSuite() {
+    void testSuite() {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
         result = suite.run(this.result);
         Assertions.assertExpression("2 run, 1 failed".equals(result.summary()), result.summary());
-        return result;
     }
 
-    TestResult testFailedResult() {
+    void testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
         result = test.run(this.result);
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
-        return result;
     }
 
-    TestResult testFailedResultFormatting() {
+    void testFailedResultFormatting() {
         result.testStarted();
         result.testFailed();
         Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
-        return result;
     }
 
-    TestResult testResult() {
+    void testResult() {
         WasRun test = new WasRun("testMethod");
         result = test.run(result);
         Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
-        return result;
     }
 
-    TestResult testTemplateMethod() {
+    void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(!test.wasRun);
         result = test.run(result);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
-        return result;
     }
 
 }
