@@ -8,7 +8,8 @@ public class TestCaseTest {
     // Run multiple tests
     // ~~Report collected results~~
     // ~~Log string in WasRun~~
-    // *Report failed tests
+    // ~~Report failed tests~~
+    // Catch and report setUp errors
 
     // TestCaseTest
     public static void main(String[] args) {
@@ -17,7 +18,14 @@ public class TestCaseTest {
         testTemplateMethod();
         testResult();
         testFailedResultFormatting(); // chapter 22
+        testFailedResult(); // chapter 22
 
+    }
+
+    private static void testFailedResult() {
+        FailingTestCase test = new FailingTestCase("testMethod");
+        TestResult result = test.run();
+        Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
     }
 
     private static void testFailedResultFormatting() {

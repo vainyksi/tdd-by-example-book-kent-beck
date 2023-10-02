@@ -23,7 +23,7 @@ class TestCase {
             method.invoke(this);
             this.tearDown();
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            testResult.testFailed();
         }
 
         return testResult;
