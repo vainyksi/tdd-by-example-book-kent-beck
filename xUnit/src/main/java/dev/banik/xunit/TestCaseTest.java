@@ -15,6 +15,11 @@ public class TestCaseTest extends TestCase {
     // ~~Log string in WasRun~~
     // ~~Report failed tests~~
     // Catch and report setUp errors
+    // Invoke tests by generics methods instead of string method names
+    // Add global exception/error handling as part of an evaluation
+    // Add exception/error handling, when it happens before the test execution (in run method) as part of an evaluation
+    // Add test runner to run test cases
+    // Run test suit via test runner
 
     // TestCaseTest
     public static void main(String[] args) {
