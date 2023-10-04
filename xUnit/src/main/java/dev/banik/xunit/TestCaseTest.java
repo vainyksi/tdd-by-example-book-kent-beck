@@ -31,6 +31,7 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
         TestResult suiteResult = suite.run(new TestResult());
         System.out.println("Test Suite results: " + suiteResult.summary());
+        System.out.println("Test Suite failing reason: " + suiteResult.getReason());
     }
 
     @Override
@@ -52,6 +53,7 @@ public class TestCaseTest extends TestCase {
                             + methodUnderTestResult.getReason().getMessage() + "\"");
         } catch (Exception e) {
             System.err.println("TEST FAILED: " + e.getMessage());
+            Assertions.assertExpression(false);
         }
     }
 
