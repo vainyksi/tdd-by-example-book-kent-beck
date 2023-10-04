@@ -20,6 +20,7 @@ public class TestCaseTest extends TestCase {
     // Add exception/error handling, when it happens before the test execution (in run method) as part of an evaluation
     // Add test runner to run test cases - distinguish between running tests and testing the methods
     // Run test suit via test runner
+    // Show all reasons for all the failed tests in a suite
 
     // TestCaseTest
     public static void main(String[] args) {
@@ -76,13 +77,13 @@ public class TestCaseTest extends TestCase {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        methodUnderTestResult = suite.run(this.methodUnderTestResult);
+        methodUnderTestResult = suite.run(methodUnderTestResult);
         Assertions.assertExpression("2 run, 1 failed".equals(methodUnderTestResult.summary()), methodUnderTestResult.summary());
     }
 
     void testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        methodUnderTestResult = test.run(this.methodUnderTestResult);
+        methodUnderTestResult = test.run(methodUnderTestResult);
         Assertions.assertExpression("1 run, 1 failed".equals(methodUnderTestResult.summary()));
     }
 
