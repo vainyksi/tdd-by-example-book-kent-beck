@@ -1,7 +1,7 @@
 package dev.banik.xunit;
 
 public class TestCaseTest extends TestCase {
-    private TestResult result;
+    private TestResult methodUnderTestResult;
 
     TestCaseTest(String methodName) {
         super(methodName);
@@ -35,21 +35,21 @@ public class TestCaseTest extends TestCase {
 
     @Override
     protected void setUp() {
-        result = new TestResult();
+        methodUnderTestResult = new TestResult();
     }
 
     public void failingTestWithExceptionDetails() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        TestResult testResult = test.run(new TestResult());
+        methodUnderTestResult = test.run(methodUnderTestResult);
         try {
-            Assertions.assertExpression(testResult.summary().contains("1 failed"),
-                    "test should fail, but did not: " + testResult.summary());
-            Assertions.assertExpression(testResult.getReason() instanceof RuntimeException,
-                    "exception thrown should be Runtime exception, but was: " + testResult.getReason() +
-                            "with message: " + testResult.getReason().getMessage());
-            Assertions.assertExpression(testResult.getReason().getMessage().equals("Failing testable testMethod"),
+            Assertions.assertExpression(methodUnderTestResult.summary().contains("1 failed"),
+                    "test should fail, but did not: " + methodUnderTestResult.summary());
+            Assertions.assertExpression(methodUnderTestResult.getReason() instanceof RuntimeException,
+                    "exception thrown should be Runtime exception, but was: " + methodUnderTestResult.getReason() +
+                            "with message: " + methodUnderTestResult.getReason().getMessage());
+            Assertions.assertExpression(methodUnderTestResult.getReason().getMessage().equals("Failing testable testMethod"),
                     "exception message should contain: \"Failing testable testMethod\", but contained: \""
-                            + testResult.getReason().getMessage() + "\"");
+                            + methodUnderTestResult.getReason().getMessage() + "\"");
         } catch (Exception e) {
             System.err.println("TEST FAILED: " + e.getMessage());
         }
@@ -59,33 +59,33 @@ public class TestCaseTest extends TestCase {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        result = suite.run(this.result);
-        Assertions.assertExpression("2 run, 1 failed".equals(result.summary()), result.summary());
+        methodUnderTestResult = suite.run(this.methodUnderTestResult);
+        Assertions.assertExpression("2 run, 1 failed".equals(methodUnderTestResult.summary()), methodUnderTestResult.summary());
     }
 
     void testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        result = test.run(this.result);
-        Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
+        methodUnderTestResult = test.run(this.methodUnderTestResult);
+        Assertions.assertExpression("1 run, 1 failed".equals(methodUnderTestResult.summary()));
     }
 
     void testFailedResultFormatting() {
-        result.testStarted();
-        result.testFailed();
-        Assertions.assertExpression("1 run, 1 failed".equals(result.summary()));
+        methodUnderTestResult.testStarted();
+        methodUnderTestResult.testFailed();
+        Assertions.assertExpression("1 run, 1 failed".equals(methodUnderTestResult.summary()));
     }
 
     void testResult() {
         WasRun test = new WasRun("testMethod");
-        result = test.run(result);
-        Assertions.assertExpression("1 run, 0 failed".equals(result.summary()));
+        methodUnderTestResult = test.run(methodUnderTestResult);
+        Assertions.assertExpression("1 run, 0 failed".equals(methodUnderTestResult.summary()));
     }
 
     void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(test.log.isEmpty());
-        result = test.run(result);
+        methodUnderTestResult = test.run(methodUnderTestResult);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
 
@@ -93,7 +93,7 @@ public class TestCaseTest extends TestCase {
         WasRun test = new FailingTestCase("testMethod");
 
         Assertions.assertExpression(test.log.isEmpty());
-        result = test.run(result);
+        methodUnderTestResult = test.run(methodUnderTestResult);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
 
