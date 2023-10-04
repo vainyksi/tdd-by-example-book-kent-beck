@@ -48,8 +48,8 @@ public class TestCaseTest extends TestCase {
                     "exception thrown should be Runtime exception, but was: " + testResult.getReason() +
                             "with message: " + testResult.getReason().getMessage());
             Assertions.assertExpression(testResult.getReason().getMessage().equals("Failing testable testMethod"),
-                    "exception message should contain `Failing testable testMethod`, but contained "
-                            + testResult.getReason().getMessage());
+                    "exception message should contain: \"Failing testable testMethod\", but contained: \""
+                            + testResult.getReason().getMessage() + "\"");
         } catch (Exception e) {
             System.err.println("TEST FAILED: " + e.getMessage());
         }
