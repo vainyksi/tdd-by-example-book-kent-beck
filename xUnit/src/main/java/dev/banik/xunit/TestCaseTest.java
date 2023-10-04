@@ -38,11 +38,30 @@ public class TestCaseTest extends TestCase {
         System.out.println(new TestCaseTest("testSuite").run(new TestResult()).summary());
 
         System.out.println(new TestCaseTest("testTearDownAfterFailing").run(new TestResult()).summary());
+
+        System.out.println(new TestCaseTest("failingTestWithExceptionDetails").run(new TestResult()).summary());
     }
 
     @Override
     protected void setUp() {
         result = new TestResult();
+    }
+
+    public void failingTestWithExceptionDetails() {
+        FailingTestCase test = new FailingTestCase("testMethod");
+        TestResult testResult = test.run(new TestResult());
+        try {
+            Assertions.assertExpression(testResult.summary().contains("1 failed"),
+                    "test should fail, but did not: " + testResult.summary());
+            Assertions.assertExpression(testResult.getReason() instanceof RuntimeException,
+                    "exception thrown should be Runtime exception, but was: " + testResult.getReason() +
+                            "with message: " + testResult.getReason().getMessage());
+            Assertions.assertExpression(testResult.getReason().getMessage().equals("Failing testable testMethod"),
+                    "exception message should contain `Failing testable testMethod`, but contained "
+                            + testResult.getReason().getMessage());
+        } catch (Exception e) {
+            System.err.println("TEST FAILED: " + e.getMessage());
+        }
     }
 
     void testSuite() {

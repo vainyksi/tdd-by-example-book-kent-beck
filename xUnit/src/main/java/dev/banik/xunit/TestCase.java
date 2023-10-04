@@ -26,6 +26,7 @@ public class TestCase {
             method.invoke(this);
         } catch (IllegalAccessException | InvocationTargetException e) {
             testResult.testFailed();
+            testResult.setReason(e.getCause());
         }
         this.tearDown();
 
