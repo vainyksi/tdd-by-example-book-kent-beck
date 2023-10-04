@@ -18,7 +18,7 @@ public class TestCaseTest extends TestCase {
     // Invoke tests by generics methods instead of string method names
     // Add global exception/error handling as part of an evaluation
     // Add exception/error handling, when it happens before the test execution (in run method) as part of an evaluation
-    // Add test runner to run test cases
+    // Add test runner to run test cases - distinguish between running tests and testing the methods
     // Run test suit via test runner
 
     // TestCaseTest
@@ -35,8 +35,18 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("testTearDownAfterFailing"));
         suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
         TestResult suiteResult = suite.run(new TestResult());
-        System.out.println("Test Suite results: " + suiteResult.summary());
-        System.out.println("Test Suite failing reason: " + suiteResult.getReason());
+
+        printSuiteResult(suiteResult);
+    }
+
+    private static void printSuiteResult(TestResult suiteResult) {
+        if (suiteResult.summary().contains("failed")) { // TODO remove duplication: `.contains("failed")`
+            System.err.println("TEST SUITE FAILED: " + suiteResult.getReason().getMessage());
+            System.err.println("TEST SUITE RESULTS: " + suiteResult.summary());
+        } else {
+            System.out.println("Test Suite results: " + suiteResult.summary());
+            System.out.println("Test Suite failing reason: " + suiteResult.getReason());
+        }
     }
 
     @Override
