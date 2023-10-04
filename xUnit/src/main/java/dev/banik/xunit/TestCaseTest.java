@@ -19,6 +19,7 @@ public class TestCaseTest extends TestCase {
     // Add global exception/error handling as part of an evaluation
     // Add exception/error handling, when it happens before the test execution (in run method) as part of an evaluation
     // Add test runner to run test cases - distinguish between running tests and testing the methods
+    //   `main` & `printSuiteResult` in ExampleTest class are basically runner
     // Run test suit via test runner
     // Show all reasons for all the failed tests in a suite
 
