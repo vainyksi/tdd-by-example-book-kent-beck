@@ -22,24 +22,15 @@ public class TestCaseTest extends TestCase {
 
         TestSuite suite = new TestSuite();
 
-        TestResult result = new TestResult();
         suite.add(new TestCaseTest("testTemplateMethod"));
         suite.add(new TestCaseTest("testResult"));
         suite.add(new TestCaseTest("testFailedResultFormatting")); // chapter 22
         suite.add(new TestCaseTest("testFailedResult")); // chapter 22
         suite.add(new TestCaseTest("testSuite")); // chapter 23
-        result = suite.run(result);
-        System.out.println(result.summary());
-
-        System.out.println(new TestCaseTest("testTemplateMethod").run(new TestResult()).summary());
-        System.out.println(new TestCaseTest("testResult").run(new TestResult()).summary());
-        System.out.println(new TestCaseTest("testFailedResultFormatting").run(new TestResult()).summary());
-        System.out.println(new TestCaseTest("testFailedResult").run(new TestResult()).summary());
-        System.out.println(new TestCaseTest("testSuite").run(new TestResult()).summary());
-
-        System.out.println(new TestCaseTest("testTearDownAfterFailing").run(new TestResult()).summary());
-
-        System.out.println(new TestCaseTest("failingTestWithExceptionDetails").run(new TestResult()).summary());
+        suite.add(new TestCaseTest("testTearDownAfterFailing"));
+        suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
+        TestResult suiteResult = suite.run(new TestResult());
+        System.out.println("Test Suite results: " + suiteResult.summary());
     }
 
     @Override
