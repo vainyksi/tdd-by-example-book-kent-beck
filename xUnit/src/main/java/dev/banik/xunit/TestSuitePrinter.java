@@ -4,6 +4,6 @@ public class TestSuitePrinter {
     String log = "";
 
     public void println(String s) {
-        log = log + s;
+        log = log + s + "\n";
     }
 }

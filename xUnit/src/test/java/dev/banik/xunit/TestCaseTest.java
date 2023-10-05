@@ -25,7 +25,7 @@ public class TestCaseTest extends TestCase {
     // Run test suit via test runner
     // Print all reasons for all the failed tests in a suite
     //   ~~print success result of a suite~~
-    //   print failed result of a suite
+    //   ~~print failed result of a suite~~
 
     // TestCaseTest
     public static void main(String[] args) {
@@ -42,6 +42,7 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
         suite.add(new TestCaseTest("testCatchSetupErrors"));
         suite.add(new TestCaseTest("testSuitePrintsSuccessfulResult"));
+        suite.add(new TestCaseTest("testSuitePrintsFailedResult"));
         TestResult suiteResult = suite.run(new TestResult());
 
         printSuiteResult(suiteResult);
@@ -61,6 +62,24 @@ public class TestCaseTest extends TestCase {
         testCaseResult = new TestResult();
     }
 
+    public void testSuitePrintsFailedResult() throws Throwable {
+        TestSuite suite = new TestSuite();
+        final AtomicBoolean wasRun = new AtomicBoolean(false);
+        suite.add(new TestCase("testMethod") {
+            public void testMethod() {
+                throw new RuntimeException("testMethod failed");
+            }
+        });
+        testCaseResult = suite.run(testCaseResult);
+        TestSuitePrinter printer = new TestSuitePrinter();
+        suite.print(testCaseResult, printer);
+        Assertions.assertExpression(printer.log.equals("""
+                        TEST SUITE FAILED: testMethod failed
+                        TEST SUITE RESULTS: 1 run, 1 failed
+                        """),
+                "printer does not contain correct text");
+    }
+
     public void testSuitePrintsSuccessfulResult() {
         TestSuite suite = new TestSuite();
         final AtomicBoolean wasRun = new AtomicBoolean(false);
@@ -72,7 +91,7 @@ public class TestCaseTest extends TestCase {
         testCaseResult = suite.run(testCaseResult);
         TestSuitePrinter printer = new TestSuitePrinter();
         suite.print(testCaseResult, printer);
-        Assertions.assertExpression(printer.log.equals("Test Suite results: 1 run, 0 failed"),
+        Assertions.assertExpression(printer.log.equals("Test Suite results: 1 run, 0 failed\n"),
                 "printer does not contain correct text");
     }
 
