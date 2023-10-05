@@ -1,6 +1,5 @@
 package dev.banik.xunit;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class TestCase {
@@ -24,7 +23,7 @@ public class TestCase {
         try {
             this.setUp();
             method.invoke(this);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             testResult.testFailed();
             testResult.setReason((e.getCause() == null) ? e : e.getCause());
         }

@@ -1,5 +1,7 @@
 package dev.banik.xunit;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class TestCaseTest extends TestCase {
     private TestResult methodUnderTestResult;
 
@@ -14,14 +16,14 @@ public class TestCaseTest extends TestCase {
     // ~~Report collected results~~
     // ~~Log string in WasRun~~
     // ~~Report failed tests~~
-    // Catch and report setUp errors
+    // ~~Catch and report setUp errors~~
     // Invoke tests by generics methods instead of string method names
     // Add global exception/error handling as part of an evaluation
     // Add exception/error handling, when it happens before the test execution (in run method) as part of an evaluation
     // Add test runner to run test cases - distinguish between running tests and testing the methods
     //   `main` & `printSuiteResult` in ExampleTest class are basically runner
     // Run test suit via test runner
-    // Show all reasons for all the failed tests in a suite
+    // Print all reasons for all the failed tests in a suite
 
     // TestCaseTest
     public static void main(String[] args) {
@@ -36,6 +38,7 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("testSuite")); // chapter 23
         suite.add(new TestCaseTest("testTearDownAfterFailing"));
         suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
+        suite.add(new TestCaseTest("testCatchSetupErrors"));
         TestResult suiteResult = suite.run(new TestResult());
 
         printSuiteResult(suiteResult);
@@ -53,6 +56,27 @@ public class TestCaseTest extends TestCase {
     @Override
     protected void setUp() {
         methodUnderTestResult = new TestResult();
+    }
+
+    public void testCatchSetupErrors() {
+        final AtomicBoolean wasRun = new AtomicBoolean(false);
+        TestCase testCaseToTest = new TestCase("testMethod") {
+
+            @Override
+            protected void setUp() {
+                throw new RuntimeException("setUp error occurred");
+            }
+
+            public void testMethod() {
+                wasRun.set(true);
+            }
+        };
+
+        TestResult testCaseResult = testCaseToTest.run(new TestResult());
+        Assertions.assertExpression(wasRun.get() == false);
+        Assertions.assertExpression(testCaseResult.summary().contains("1 failed"));
+        Assertions.assertExpression(testCaseResult.getReason() instanceof RuntimeException);
+        Assertions.assertExpression(testCaseResult.getReason().getMessage().equals("setUp error occurred"));
     }
 
     public void failingTestWithExceptionDetails() {
