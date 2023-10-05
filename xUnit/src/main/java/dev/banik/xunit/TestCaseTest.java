@@ -82,19 +82,14 @@ public class TestCaseTest extends TestCase {
     public void failingTestWithExceptionDetails() {
         FailingTestCase test = new FailingTestCase("testMethod");
         methodUnderTestResult = test.run(methodUnderTestResult);
-        try {
-            Assertions.assertExpression(methodUnderTestResult.summary().contains("1 failed"),
-                    "test should fail, but did not: " + methodUnderTestResult.summary());
-            Assertions.assertExpression(methodUnderTestResult.getReason() instanceof RuntimeException,
-                    "exception thrown should be Runtime exception, but was: " + methodUnderTestResult.getReason() +
-                            "with message: " + methodUnderTestResult.getReason().getMessage());
-            Assertions.assertExpression(methodUnderTestResult.getReason().getMessage().equals("Failing testable testMethod"),
-                    "exception message should contain: \"Failing testable testMethod\", but contained: \""
-                            + methodUnderTestResult.getReason().getMessage() + "\"");
-        } catch (Exception e) {
-            System.err.println("TEST FAILED: " + e.getMessage());
-            Assertions.assertExpression(false);
-        }
+        Assertions.assertExpression(methodUnderTestResult.summary().contains("1 failed"),
+                "test should fail, but did not: " + methodUnderTestResult.summary());
+        Assertions.assertExpression(methodUnderTestResult.getReason() instanceof RuntimeException,
+                "exception thrown should be Runtime exception, but was: " + methodUnderTestResult.getReason() +
+                        "with message: " + methodUnderTestResult.getReason().getMessage());
+        Assertions.assertExpression(methodUnderTestResult.getReason().getMessage().equals("Failing testable testMethod"),
+                "exception message should contain: \"Failing testable testMethod\", but contained: \""
+                        + methodUnderTestResult.getReason().getMessage() + "\"");
     }
 
     void testSuite() {
