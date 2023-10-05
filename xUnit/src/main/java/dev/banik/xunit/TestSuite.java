@@ -2,12 +2,8 @@ package dev.banik.xunit;
 
 import java.util.LinkedList;
 
-public class TestSuite extends TestCase{
-    private LinkedList<TestCase> tests = new LinkedList<>();
-
-    TestSuite() {
-        super(null);
-    }
+public class TestSuite extends Test {
+    private final LinkedList<TestCase> tests = new LinkedList<>();
 
     public void add(TestCase testCase) {
         tests.add(testCase);
@@ -19,5 +15,13 @@ public class TestSuite extends TestCase{
             test.run(testResult);
         }
         return testResult;
+    }
+
+    @Override
+    protected void tearDown() {
+    }
+
+    @Override
+    protected void setUp() {
     }
 }

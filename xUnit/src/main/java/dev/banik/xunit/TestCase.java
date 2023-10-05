@@ -2,7 +2,7 @@ package dev.banik.xunit;
 
 import java.lang.reflect.Method;
 
-public class TestCase {
+public class TestCase extends Test {
 
     protected final Method method;
 
@@ -14,6 +14,7 @@ public class TestCase {
         }
     }
 
+    @Override
     public TestResult run(TestResult testResult) {
         testResult.testStarted();
         try {
@@ -28,9 +29,11 @@ public class TestCase {
         return testResult;
     }
 
+    @Override
     protected void tearDown() {
     }
 
+    @Override
     protected void setUp() {
     }
 }
