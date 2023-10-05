@@ -26,4 +26,7 @@ class WasRun extends TestCase {
         throw new RuntimeException("Failing method");
     }
 
+    public boolean wasRun() {
+        return log.equals("setUp testMethod tearDown ");
+    }
 }

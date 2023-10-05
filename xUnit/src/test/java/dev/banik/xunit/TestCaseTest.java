@@ -82,35 +82,30 @@ public class TestCaseTest extends TestCase {
 
     public void testSuitePrintsSuccessfulResult() {
         TestSuite suite = new TestSuite();
-        final AtomicBoolean wasRun = new AtomicBoolean(false);
-        suite.add(new TestCase("testMethod") {
-            public void testMethod() {
-                wasRun.set(true);
-            }
-        });
+        WasRun testCase = new WasRun("testMethod");
+        suite.add(testCase);
         testCaseResult = suite.run(testCaseResult);
         TestSuitePrinter printer = new TestSuitePrinter();
         suite.print(testCaseResult, printer);
+        Assertions.assertExpression(testCase.wasRun());
         Assertions.assertExpression(printer.log.equals("Test Suite results: 1 run, 0 failed\n"),
                 "printer does not contain correct text");
     }
 
     public void testCatchSetupErrors() {
-        final AtomicBoolean wasRun = new AtomicBoolean(false);
-        TestCase testCaseToTest = new TestCase("testMethod") {
-
+        WasRun testCaseToTest = new WasRun("testMethod") {
             @Override
             protected void setUp() {
                 throw new RuntimeException("setUp error occurred");
             }
 
             public void testMethod() {
-                wasRun.set(true);
+                super.testMethod();
             }
         };
 
         testCaseResult = testCaseToTest.run(new TestResult());
-        Assertions.assertExpression(wasRun.get() == false);
+        Assertions.assertExpression(!testCaseToTest.wasRun());
         Assertions.assertExpression(testCaseResult.summary().contains("1 failed"));
         Assertions.assertExpression(testCaseResult.getReason() instanceof RuntimeException);
         Assertions.assertExpression(testCaseResult.getReason().getMessage().equals("setUp error occurred"));
@@ -169,6 +164,7 @@ public class TestCaseTest extends TestCase {
         Assertions.assertExpression(test.log.isEmpty());
         testCaseResult = test.run(testCaseResult);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
+        Assertions.assertExpression(test.wasRun());
     }
 
 }
