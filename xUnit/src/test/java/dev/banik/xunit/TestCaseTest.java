@@ -24,6 +24,8 @@ public class TestCaseTest extends TestCase {
     //   `main` & `printSuiteResult` in ExampleTest class are basically runner
     // Run test suit via test runner
     // Print all reasons for all the failed tests in a suite
+    //   ~~print success result of a suite~~
+    //   print failed result of a suite
 
     // TestCaseTest
     public static void main(String[] args) {
@@ -39,6 +41,7 @@ public class TestCaseTest extends TestCase {
         suite.add(new TestCaseTest("testTearDownAfterFailing"));
         suite.add(new TestCaseTest("failingTestWithExceptionDetails"));
         suite.add(new TestCaseTest("testCatchSetupErrors"));
+        suite.add(new TestCaseTest("testSuitePrintsSuccessfulResult"));
         TestResult suiteResult = suite.run(new TestResult());
 
         printSuiteResult(suiteResult);
@@ -56,6 +59,21 @@ public class TestCaseTest extends TestCase {
     @Override
     protected void setUp() {
         testCaseResult = new TestResult();
+    }
+
+    public void testSuitePrintsSuccessfulResult() {
+        TestSuite suite = new TestSuite();
+        final AtomicBoolean wasRun = new AtomicBoolean(false);
+        suite.add(new TestCase("testMethod") {
+            public void testMethod() {
+                wasRun.set(true);
+            }
+        });
+        testCaseResult = suite.run(testCaseResult);
+        TestSuitePrinter printer = new TestSuitePrinter();
+        suite.print(testCaseResult, printer);
+        Assertions.assertExpression(printer.log.equals("Test Suite results: 1 run, 0 failed"),
+                "printer does not contain correct text");
     }
 
     public void testCatchSetupErrors() {
