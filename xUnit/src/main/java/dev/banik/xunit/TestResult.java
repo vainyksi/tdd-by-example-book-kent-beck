@@ -24,4 +24,8 @@ public class TestResult {
     public Throwable getReason() {
         return failingReason;
     }
+
+    public boolean isSuccess() {
+        return this.errorCount == 0;
+    }
 }

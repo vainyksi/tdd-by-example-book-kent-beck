@@ -49,11 +49,11 @@ public class TestCaseTest extends TestCase {
     }
 
     private static void printSuiteResult(TestResult suiteResult) {
-        if (!suiteResult.summary().contains("0 failed")) { // TODO remove duplication: `.contains("0 failed")`
+        if (suiteResult.isSuccess()) {
+            System.out.println("Test Suite results: " + suiteResult.summary());
+        } else {
             System.err.println("TEST SUITE FAILED: " + suiteResult.getReason().getMessage());
             System.err.println("TEST SUITE RESULTS: " + suiteResult.summary());
-        } else {
-            System.out.println("Test Suite results: " + suiteResult.summary());
         }
     }
 

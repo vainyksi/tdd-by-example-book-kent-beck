@@ -26,7 +26,7 @@ public class TestSuite extends Test {
     }
 
     public void print(TestResult testCaseResult, TestSuitePrinter printer) {
-        if (testCaseResult.summary().contains("0 failed")) { // TODO remove duplication: `.contains("0 failed")`
+        if (testCaseResult.isSuccess()) {
             printSuccess(printer, testCaseResult.summary());
         } else {
             printFailed(printer, testCaseResult);
