@@ -3,7 +3,7 @@ package dev.banik.xunit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TestCaseTest extends TestCase {
-    private TestResult methodUnderTestResult;
+    private TestResult testCaseResult;
 
     TestCaseTest(String methodName) {
         super(methodName);
@@ -55,7 +55,7 @@ public class TestCaseTest extends TestCase {
 
     @Override
     protected void setUp() {
-        methodUnderTestResult = new TestResult();
+        testCaseResult = new TestResult();
     }
 
     public void testCatchSetupErrors() {
@@ -72,7 +72,7 @@ public class TestCaseTest extends TestCase {
             }
         };
 
-        TestResult testCaseResult = testCaseToTest.run(new TestResult());
+        testCaseResult = testCaseToTest.run(new TestResult());
         Assertions.assertExpression(wasRun.get() == false);
         Assertions.assertExpression(testCaseResult.summary().contains("1 failed"));
         Assertions.assertExpression(testCaseResult.getReason() instanceof RuntimeException);
@@ -81,48 +81,48 @@ public class TestCaseTest extends TestCase {
 
     public void failingTestWithExceptionDetails() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        methodUnderTestResult = test.run(methodUnderTestResult);
-        Assertions.assertExpression(methodUnderTestResult.summary().contains("1 failed"),
-                "test should fail, but did not: " + methodUnderTestResult.summary());
-        Assertions.assertExpression(methodUnderTestResult.getReason() instanceof RuntimeException,
-                "exception thrown should be Runtime exception, but was: " + methodUnderTestResult.getReason() +
-                        "with message: " + methodUnderTestResult.getReason().getMessage());
-        Assertions.assertExpression(methodUnderTestResult.getReason().getMessage().equals("Failing testable testMethod"),
+        testCaseResult = test.run(testCaseResult);
+        Assertions.assertExpression(testCaseResult.summary().contains("1 failed"),
+                "test should fail, but did not: " + testCaseResult.summary());
+        Assertions.assertExpression(testCaseResult.getReason() instanceof RuntimeException,
+                "exception thrown should be Runtime exception, but was: " + testCaseResult.getReason() +
+                        "with message: " + testCaseResult.getReason().getMessage());
+        Assertions.assertExpression(testCaseResult.getReason().getMessage().equals("Failing testable testMethod"),
                 "exception message should contain: \"Failing testable testMethod\", but contained: \""
-                        + methodUnderTestResult.getReason().getMessage() + "\"");
+                        + testCaseResult.getReason().getMessage() + "\"");
     }
 
     void testSuite() {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        methodUnderTestResult = suite.run(methodUnderTestResult);
-        Assertions.assertExpression("2 run, 1 failed".equals(methodUnderTestResult.summary()), methodUnderTestResult.summary());
+        testCaseResult = suite.run(testCaseResult);
+        Assertions.assertExpression("2 run, 1 failed".equals(testCaseResult.summary()), testCaseResult.summary());
     }
 
     void testFailedResult() {
         FailingTestCase test = new FailingTestCase("testMethod");
-        methodUnderTestResult = test.run(methodUnderTestResult);
-        Assertions.assertExpression("1 run, 1 failed".equals(methodUnderTestResult.summary()));
+        testCaseResult = test.run(testCaseResult);
+        Assertions.assertExpression("1 run, 1 failed".equals(testCaseResult.summary()));
     }
 
     void testFailedResultFormatting() {
-        methodUnderTestResult.testStarted();
-        methodUnderTestResult.testFailed();
-        Assertions.assertExpression("1 run, 1 failed".equals(methodUnderTestResult.summary()));
+        testCaseResult.testStarted();
+        testCaseResult.testFailed();
+        Assertions.assertExpression("1 run, 1 failed".equals(testCaseResult.summary()));
     }
 
     void testResult() {
         WasRun test = new WasRun("testMethod");
-        methodUnderTestResult = test.run(methodUnderTestResult);
-        Assertions.assertExpression("1 run, 0 failed".equals(methodUnderTestResult.summary()));
+        testCaseResult = test.run(testCaseResult);
+        Assertions.assertExpression("1 run, 0 failed".equals(testCaseResult.summary()));
     }
 
     void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
 
         Assertions.assertExpression(test.log.isEmpty());
-        methodUnderTestResult = test.run(methodUnderTestResult);
+        testCaseResult = test.run(testCaseResult);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
 
@@ -130,7 +130,7 @@ public class TestCaseTest extends TestCase {
         WasRun test = new FailingTestCase("testMethod");
 
         Assertions.assertExpression(test.log.isEmpty());
-        methodUnderTestResult = test.run(methodUnderTestResult);
+        testCaseResult = test.run(testCaseResult);
         Assertions.assertExpression("setUp testMethod tearDown ".equals(test.log));
     }
 
