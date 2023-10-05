@@ -6,7 +6,7 @@ public class TestSuite extends TestCase{
     private LinkedList<TestCase> tests = new LinkedList<>();
 
     TestSuite() {
-        super();
+        super(null);
     }
 
     public void add(TestCase testCase) {

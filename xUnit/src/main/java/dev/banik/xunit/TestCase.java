@@ -14,10 +14,6 @@ public class TestCase {
         }
     }
 
-    public TestCase() {
-        method = null;
-    }
-
     public TestResult run(TestResult testResult) {
         testResult.testStarted();
         try {
